@@ -1,39 +1,32 @@
-# PalacePrompt — Two-Step Prompt Builder
+# PalacePrompt JS (Compact)
 
-A standalone, browser-only web app that populates your supplied Sketchy Step 2 CK prompt in two stages.
+A small, no-framework JavaScript web app for building a two-stage Sketchy Step 2 CK image prompt. **No Node.js, React, build step, or network connection required.**
 
-## Start
+## How to use
 
-1. Open `index.html` in a modern browser (Chrome, Safari, or Firefox), or host the entire folder on GitHub Pages.
-2. On the **Build Prompt 1E** stage, fill **Condition name**, **Parody world**, and **Clinical data**. Click **Copy Prompt 1E**.
-3. Switch to **Add Data 2** using the sliding toggle at the top of the inputs (or the Continue button), paste **Data 2**, and click **Copy Final Prompt**. Only one input stage is shown at a time; you can return to Stage 1 without losing anything. The original template body and instructions remain intact.
-4. Use **Template settings** to edit the base prompt, save named versions, restore old versions, or restore the factory template.
+- Double-click `index.html` (keep `app.js`, `template.js`, and `styles.css` in the same folder).
+- Step 1: enter condition name, parody world, and clinical data. Press **Copy 1E**.
+- Use the sliding stage toggle or **Next** button.
+- Step 2: paste Data 2, then press **Copy final**.
+- Use **Preview** to view the output on narrow screens; on wider screens it sits alongside the form.
+- **Settings**: edit and save the base template, restore any version, restore the original template, and export/import JSON backups.
 
-## Placeholder rules
+Shortcut: **⌘Enter** on macOS or **Ctrl+Enter** on Windows/Linux copies the output for the selected stage.
 
-Your template must contain each of these tokens:
+## Files
 
-- `DATA1-condition-name` — replaced with the Condition name
-- `DATA1-parody-world-name` — replaced with Parody world
-- `DATA1-clinical-data` — replaced with Clinical data
-- `DATA2` — **on a line by itself**, replaced with Data 2 when generating Prompt 2
+- `index.html`: minimal launcher (loads three scripts/styles)
+- `app.js`: UI and all app logic in vanilla JavaScript
+- `template.js`: original full 9,386-character prompt template
+- `styles.css`: compact and responsive layout
+- `template.txt`: original template for reference
 
-Stage 1 intentionally leaves the `DATA2` line in Prompt 1E. Stage 2 replaces only that standalone line. If a data field contains special characters, dollar signs, or multiline content, they are inserted literally.
+## Local data / migration
 
-## Save and recovery
+Saved inputs and template versions are kept in browser localStorage (`palaceprompt.state.v1`). If you host the new version on the **same origin** as the earlier PalacePrompt, prior saved data can be loaded. Opening different `file://` copies can have different browser storage; use Settings → Backup to transfer your history reliably. No text is transmitted to servers.
 
-Your selected stage, all fields, and versions are persisted in your browser's `localStorage` for this page/origin, not a cloud account. This usually persists between visits using the same browser and website origin. It can be lost if the browser's site data is cleared, or if you switch devices/browsers. **Export backup (.json)** frequently; **Import backup** restores all text, the active template, and saved versions.
+Clipboard read/write may require browser permission or a secure origin. If Paste is blocked, click the field and press ⌘V/Ctrl+V. Copy includes a legacy fallback.
 
-Each **Save new version** in Template settings adds a named, timestamped snapshot. **Restore** applies an old snapshot and logs the restoration as an additional version. **Restore factory template** does not delete version history.
+## Host on GitHub Pages
 
-## Clipboard details
-
-Copy and paste buttons use browser clipboard permissions when available. Browser file:// or insecure-origin restrictions may block direct clipboard reading; in that case, click the target field and use **Cmd+V** (Mac) or **Ctrl+V** (Windows/Linux). Copy has a legacy fallback, but may also require manual copying in restrictive environments.
-
-## GitHub Pages
-
-Upload `index.html`, `styles.css`, and `app.js` at the root of a repository, then enable GitHub Pages from the repository settings. The page has no dependencies, API calls, build step, or backend. The app also runs locally.
-
-## Privacy
-
-The app does not send data to any server. The **Open ChatGPT** link simply opens ChatGPT in a new tab; paste the copied prompt manually. No prompt or clinical data is automatically submitted to ChatGPT. Use appropriate safeguards for sensitive patient information.
+Upload `index.html`, `app.js`, `styles.css` and `template.js` to a repository/folder. Deploy the folder as a static site. No compilation or dependencies.
