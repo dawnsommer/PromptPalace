@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#f8fafc" />
+  <title>PalacePrompt — Two-Step Prompt Builder</title>
+  <style>
+:root{color-scheme:light;--bg:#f7f9fc;--surface:#fff;--surface2:#f8fafe;--ink:#17233d;--muted:#708098;--line:#e6eaf1;--indigo:#485bd3;--indigo-deep:#384abb;--indigo-light:#eef0ff;--success:#15906c;--error:#c33b50;--shadow:0 8px 36px rgba(28,45,78,.045)}
+*{box-sizing:border-box}html{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body{margin:0;background:var(--bg);color:var(--ink)}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #aab4ff;outline-offset:2px}svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}.app-shell{max-width:1470px;margin:auto;padding:0 44px}.topbar{height:92px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px}.brand-icon{width:43px;height:43px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#455bd3;color:#fff;box-shadow:0 5px 12px rgba(65,84,202,.17)}.brand-icon svg{width:27px;height:27px}.brand-name{font-size:20px;font-weight:770;letter-spacing:-.65px}.brand-sub{font-size:11px;color:var(--muted);letter-spacing:.25px;margin-top:2px}.top-setting-btn{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e0e5ee;padding:12px 16px;border-radius:11px;font-size:13px;font-weight:650;color:#45526b;transition:.2s}.top-setting-btn:hover,.outline-btn:hover,.icon-action:hover{border-color:#aeb8d2;background:#f9faff}.intro{padding:39px 0 32px}.eyebrow,.preview-eyebrow{font-size:11px;letter-spacing:1.5px;color:#626cc3;font-weight:800}.intro h1{font-size:clamp(26px,3vw,40px);letter-spacing:-1.45px;line-height:1.2;margin:9px 0 10px;font-weight:760}.intro h1 span{color:var(--indigo)}.intro p{font-size:14px;line-height:1.65;color:var(--muted);margin:0;max-width:770px}.workspace{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:24px;align-items:start}.inputs-column{min-width:0}.step-card,.preview-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);min-width:0}.step-card{padding:25px 25px 22px}.section-head{display:flex;align-items:center;gap:13px;margin-bottom:25px}.step-number{font-weight:750;border-radius:12px;color:#4d5ccb;background:var(--indigo-light);font-size:14px;min-width:42px;height:42px;display:flex;align-items:center;justify-content:center}.head-copy{flex:1;min-width:0}.section-head h2,.preview-top h2{font-size:19px;letter-spacing:-.47px;margin:0 0 5px}.section-head p{margin:0;color:var(--muted);font-size:12px}.step-status{white-space:nowrap;color:#7c88a0;font-size:11px;padding:7px 8px;border-radius:50px;background:#f5f7fb;font-weight:650}.step-status.ready{background:#eaf8f1;color:#147e5f}.field-stack{display:grid;gap:19px}.field label,.row-head label{display:block;font-size:13px;font-weight:680;color:#2b3752;margin:0 0 9px}.required{color:#6c7bdd}.field-control{position:relative;min-width:0}.field-control input,.field-control textarea{display:block;width:100%;border:1px solid #e1e6ef;border-radius:11px;background:#fff;color:#24324d;font-size:13px;line-height:1.65;outline:none;transition:border-color .16s,box-shadow .16s}.field-control input{min-height:49px;padding:12px 100px 12px 14px}.field-control textarea{padding:12px 14px 45px;resize:vertical;min-height:132px}.field-control input:focus,.field-control textarea:focus,.template-section textarea:focus,.template-save-controls input:focus{border-color:#8390e9;box-shadow:0 0 0 3px rgba(75,90,209,.1)}::placeholder{color:#a0a9ba}.paste-btn{position:absolute;right:7px;top:7px;border:1px solid #e9ecf3;border-radius:8px;color:#596984;background:#f8f9fc;height:34px;padding:0 10px;display:flex;gap:6px;align-items:center;font-size:12px;font-weight:650}.paste-btn svg{width:16px;height:16px}.paste-btn:hover{background:#ecefff;border-color:#cad1ee;color:#4150b4}.tall .paste-btn{top:auto;bottom:9px;right:9px}.field-meta{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#9aa3b3;margin-top:7px}.step-footer{margin-top:22px;border-top:1px solid #edf0f5;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:10px}.subtle-caption{color:#929eb0;font-size:11px;line-height:1.5;max-width:280px}.primary-btn{background:var(--indigo);color:white;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;padding:12px 16px;font-size:12px;font-weight:730;white-space:nowrap;transition:background .2s,transform .12s}.primary-btn:hover:not(:disabled){background:var(--indigo-deep)}.primary-btn:active:not(:disabled){transform:translateY(1px)}.primary-btn:disabled{background:#c1c8df;color:#f7f8ff}.primary-btn svg{width:16px;height:16px}.connector{height:56px;display:flex;align-items:center;justify-content:center;gap:12px}.connector-line{width:44px;height:1px;background:#dbe1eb}.connector span{color:#94a0b3;font-weight:760;letter-spacing:1.25px;font-size:10px}.data-note{display:flex;gap:9px;padding:16px 7px;color:#8994a8;font-size:11px;line-height:1.65;align-items:flex-start}.data-note svg{width:16px;height:16px;color:#54a086;margin-top:1px}.preview-card{padding:26px;position:sticky;top:18px}.preview-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:21px}.preview-top h2{margin:6px 0 0}.save-status{white-space:nowrap;color:var(--success);font-size:11px;background:#ecf8f2;border-radius:99px;padding:7px 10px;font-weight:650}.preview-tabs{background:#f3f5fa;padding:5px;border-radius:10px;display:flex;gap:5px}.preview-tab{flex:1;border:0;border-radius:7px;background:transparent;font-size:12px;color:#738099;font-weight:700;padding:11px 8px}.preview-tab[aria-selected=true]{background:white;color:var(--indigo);box-shadow:0 2px 7px #26376610}.preview-alert{font-size:11px;color:#7b889d;min-height:34px;display:flex;align-items:center;line-height:1.45;padding:4px 1px}.preview-alert.warn{color:#a66a26}.preview-alert.ok{color:var(--success)}.output-area{width:100%;height:665px;min-height:390px;resize:vertical;border:1px solid var(--line);border-radius:11px;background:#f9fafc;padding:17px 18px;color:#46516a;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;line-height:1.73;outline:none;white-space:pre-wrap;overflow:auto}.preview-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px}.preview-footer>span{font-size:11px;color:#8c97a9}.preview-actions{display:flex;gap:8px;align-items:center}.outline-btn,.icon-action{background:white;color:#52607b;border:1px solid #dfe5ee;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;font-size:12px;font-weight:700;transition:.18s}.outline-btn svg{width:16px;height:16px}.icon-action{padding:10px 11px}.icon-action svg{width:18px;height:18px}.outline-btn:disabled,.icon-action:disabled{opacity:.5}.external-actions{border-top:1px solid #edf0f4;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:17px;padding-top:16px}.external-actions span{color:#98a3b4;font-size:11px}.external-actions a{color:#4a5dcc;font-weight:730;font-size:12px;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}.external-actions a:hover{text-decoration:underline}.external-actions svg{width:14px;height:14px}.site-footer{color:#a4adbd;text-align:center;font-size:11px;padding:35px 0 25px}.site-footer span{padding:0 8px}
+.modal-overlay{position:fixed;inset:0;z-index:10;background:rgba(19,31,56,.45);display:flex;justify-content:center;align-items:center;padding:25px;backdrop-filter:blur(5px)}.modal-overlay[hidden]{display:none}.settings-modal{width:min(850px,100%);max-height:min(93vh,1100px);background:#fff;border-radius:17px;box-shadow:0 35px 100px #0a163a44;display:flex;flex-direction:column;overflow:hidden}.modal-head{padding:25px 28px 19px;border-bottom:1px solid var(--line);display:flex;align-items:start;justify-content:space-between}.modal-head h2{font-size:22px;letter-spacing:-.6px;margin:7px 0 7px}.modal-head p{font-size:12px;color:var(--muted);margin:0}.modal-close{padding:8px;display:flex;align-items:center;border-radius:8px;border:1px solid #e7eaf0;background:#fff;color:#77849a}.modal-body{padding:24px 28px;overflow:auto}.row-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.row-head label{margin:0}.template-state{font-size:11px;color:#8b95a7}.template-state.dirty{color:#b87229}.field-help{font-size:12px;line-height:1.6;color:#7b889c;margin:7px 0 13px}.field-help code{font-size:11px;background:#f0f2f8;border-radius:3px;padding:2px 4px}.token-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}.token-row code{font-size:10px;color:#4a5cc0;background:#f0f2ff;border:1px solid #e6e9ff;border-radius:6px;padding:7px 9px}.template-section textarea{width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.7;border:1px solid #dee5f0;border-radius:10px;padding:15px;resize:vertical;min-height:220px;outline:none}.validation-note{font-size:11px;color:var(--success);margin:9px 0 10px;line-height:1.5}.validation-note.invalid{color:var(--error)}.template-save-controls{display:flex;gap:9px}.template-save-controls input{flex:1;min-width:0;padding:11px 12px;border:1px solid #dfe5ee;border-radius:9px;outline:none;font-size:12px}.history-section,.backup-section{border-top:1px solid var(--line);margin-top:26px;padding-top:22px}.history-section h3,.backup-section h3{font-size:15px;letter-spacing:-.2px;margin:0}.small-muted{color:#96a0b2;font-size:11px}.versions-list{display:grid;gap:8px;max-height:240px;overflow-y:auto}.version-entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 13px;border:1px solid #e8ecf2;border-radius:10px;background:#fcfdff}.version-entry-title{font-weight:700;font-size:12px}.version-entry-meta{color:#909bac;font-size:10px;margin-top:4px}.version-entry button{border:1px solid #e1e5ee;background:white;padding:8px 12px;border-radius:7px;font-size:11px;font-weight:700;color:#5869c4}.version-entry button:hover{background:#f3f5ff}.version-entry button:disabled{color:#95a1ab;background:#f6f7f9}.backup-actions{display:flex;flex-wrap:wrap;gap:9px}.danger-outline-btn{border-radius:10px;border:1px solid #eed8dd;background:white;color:#b44458;padding:11px 14px;font-size:12px;font-weight:650}.danger-outline-btn:hover{background:#fff3f5}.modal-foot{padding:15px 28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}.modal-foot span{color:#98a3b4;font-size:11px}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,15px);pointer-events:none;z-index:20;background:#263755;color:white;border-radius:10px;box-shadow:0 12px 36px #14203a38;padding:13px 18px;font-weight:600;font-size:12px;opacity:0;transition:transform .2s,opacity .2s;text-align:center;max-width:min(90vw,550px)}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1060px){.app-shell{padding:0 24px}.workspace{gap:16px}.step-card,.preview-card{padding:20px}.section-head{flex-wrap:wrap}.step-status{margin-left:auto}.step-footer{flex-direction:column;align-items:stretch}.step-footer .subtle-caption{max-width:none}.primary-btn{width:100%}}@media(max-width:790px){.workspace{grid-template-columns:1fr}.preview-card{position:static}.output-area{height:410px}.intro{padding-top:29px}.app-shell{padding:0 18px}.topbar{height:74px}}@media(max-width:480px){.app-shell{padding:0 12px}.top-setting-btn{font-size:0;gap:0;padding:12px}.top-setting-btn svg{width:19px;height:19px}.step-card,.preview-card{padding:18px 15px}.intro{padding:29px 4px 22px}.intro h1{font-size:27px}.section-head{gap:10px}.step-number{width:37px;min-width:37px;height:37px}.step-status{width:100%;text-align:center;margin-left:0}.external-actions{align-items:start;flex-direction:column}.modal-overlay{padding:7px}.settings-modal{max-height:98vh}.modal-head,.modal-body,.modal-foot{padding-left:17px;padding-right:17px}.template-save-controls,.modal-foot{flex-direction:column;align-items:stretch}.modal-foot span{line-height:1.5}}
+
+/* Switch stages in-place rather than stacking cards vertically. */
+.stage-switch{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:5px;gap:0;border:1px solid #e2e7f4;background:#eaf0fa;border-radius:14px;margin-bottom:14px;box-shadow:0 3px 12px #24385808}
+.stage-switch-track{position:absolute;z-index:-1;top:5px;bottom:5px;left:5px;width:calc((100% - 10px)/2);border-radius:10px;background:#fff;box-shadow:0 2px 9px #253d661b;border:1px solid #e8ebf7;transition:transform .24s cubic-bezier(.22,1,.36,1)}
+.stage-switch.stage-two .stage-switch-track{transform:translateX(100%)}
+.stage-toggle{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:#7c88a0;font-size:13px;font-weight:720;transition:color .18s;white-space:nowrap}
+.stage-toggle[aria-selected="true"]{color:#4358bc}
+.stage-toggle-number{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:8px;background:#dde4f4;color:#7584a1;font-size:12px}
+.stage-toggle[aria-selected="true"] .stage-toggle-number{background:#eaf0ff;color:#4157c3}
+.stage-panel[hidden]{display:none !important}
+.stage-navigation{margin-top:16px;display:flex;justify-content:flex-end}
+.stage-nav-btn{border:0;background:transparent;color:#465cc4;font-weight:740;font-size:12px;min-height:30px;padding:5px 3px;display:inline-flex;align-items:center;gap:8px}
+.stage-nav-btn:hover{color:#2f40a5;text-decoration:underline}
+@media(max-width:480px){.stage-switch{margin-bottom:12px}.stage-toggle{font-size:11px;gap:6px;min-height:46px;padding:8px 5px}.stage-toggle-number{width:21px;height:21px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.stage-switch-track{transition:none}}
+
+  </style>
+
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="PalacePrompt">
+        <div class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V9l9-6 9 6v11"/><path d="M9 20v-8h6v8"/><path d="M3 20h18"/><path d="M7 9h.01M17 9h.01"/></svg></div>
+        <div><div class="brand-name">PalacePrompt</div><div class="brand-sub">Two-step prompt builder</div></div>
+      </div>
+      <button class="top-setting-btn" id="openSettings" type="button" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.86l.06.06-2 2-.06-.06a1.7 1.7 0 0 0-1.86-.34 1.7 1.7 0 0 0-1.02 1.55V20h-2.83v-.08A1.7 1.7 0 0 0 11 18.37a1.7 1.7 0 0 0-1.87.34l-.06.06-2-2 .06-.06A1.7 1.7 0 0 0 7.47 15a1.7 1.7 0 0 0-1.55-1.02H5.8v-2.83h.12a1.7 1.7 0 0 0 1.55-1.02 1.7 1.7 0 0 0-.34-1.87l-.06-.06 2-2 .06.06A1.7 1.7 0 0 0 11 6.6a1.7 1.7 0 0 0 1.03-1.55V5h2.83v.05a1.7 1.7 0 0 0 1.02 1.55 1.7 1.7 0 0 0 1.86-.34l.06-.06 2 2-.06.06a1.7 1.7 0 0 0-.34 1.87 1.7 1.7 0 0 0 1.55 1.02h.1v2.83h-.1A1.7 1.7 0 0 0 19.4 15Z" transform="translate(-.5,-.5)"/></svg>
+        Template settings
+      </button>
+    </header>
+
+    <div class="intro">
+      <div class="eyebrow">YOUR SKETCHY STEP 2 CK WORKFLOW</div>
+      <h1>Build your prompt in <span>two steps.</span></h1>
+      <p>Enter your first three inputs, then use the stage toggle to add Data 2. Copy either completed prompt instantly.</p>
+    </div>
+
+    <main class="workspace">
+      <div class="inputs-column">
+        <div class="stage-switch" role="tablist" aria-label="Prompt builder stage">
+          <span class="stage-switch-track" aria-hidden="true"></span>
+          <button class="stage-toggle" id="stageOneToggle" type="button" role="tab" aria-selected="true" aria-controls="stageOnePanel" tabindex="0" data-stage="one"><span class="stage-toggle-number">1</span> Build Prompt 1E</button>
+          <button class="stage-toggle" id="stageTwoToggle" type="button" role="tab" aria-selected="false" aria-controls="stageTwoPanel" tabindex="-1" data-stage="two"><span class="stage-toggle-number">2</span> Add Data 2</button>
+        </div>
+        <section class="step-card stage-panel" id="stageOnePanel" role="tabpanel" aria-labelledby="stageOneToggle">
+          <div class="section-head">
+            <span class="step-number">01</span>
+            <div class="head-copy"><h2 id="step1Heading">Build Prompt 1E</h2><p>Three inputs populate your saved base template.</p></div>
+            <span class="step-status" id="step1Status">0 of 3 filled</span>
+          </div>
+          <div class="field-stack">
+            <div class="field"><label for="condition">Condition name <span class="required">*</span></label>
+              <div class="field-control"><input id="condition" autocomplete="off" placeholder="e.g. Aortic dissection" spellcheck="false" /><button class="paste-btn" type="button" data-paste="condition" title="Paste condition from clipboard" aria-label="Paste condition name"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="13" height="16" rx="2"/><path d="M9 5V3h7v2M9 9h7M9 13h7"/></svg><span>Paste</span></button></div>
+            </div>
+            <div class="field"><label for="world">Parody world <span class="required">*</span></label>
+              <div class="field-control"><input id="world" autocomplete="off" placeholder="e.g. One Piece pirate universe" /><button class="paste-btn" type="button" data-paste="world" title="Paste parody world from clipboard" aria-label="Paste parody world"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="13" height="16" rx="2"/><path d="M9 5V3h7v2M9 9h7M9 13h7"/></svg><span>Paste</span></button></div>
+            </div>
+            <div class="field"><label for="clinical">Clinical data / source emphasis <span class="required">*</span></label>
+              <div class="field-control tall"><textarea id="clinical" rows="8" placeholder="Paste your high-yield clinical facts, diagnostic steps, treatments, and pitfalls..."></textarea><button class="paste-btn" type="button" data-paste="clinical" title="Paste clinical data from clipboard" aria-label="Paste clinical data"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="13" height="16" rx="2"/><path d="M9 5V3h7v2M9 9h7M9 13h7"/></svg><span>Paste</span></button></div>
+              <div class="field-meta"><span>Supports multiline text</span><span id="clinicalCount">0 characters</span></div>
+            </div>
+          </div>
+          <div class="step-footer"><span class="subtle-caption" id="step1Hint">Complete all three fields to copy Prompt 1E.</span><button id="copy1" class="primary-btn" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2"/></svg>Copy Prompt 1E</button></div>
+          <div class="stage-navigation"><button id="nextStage" type="button" class="stage-nav-btn">Continue to Data 2 <span aria-hidden="true">→</span></button></div>
+        </section>
+
+        <section class="step-card stage-panel" id="stageTwoPanel" role="tabpanel" aria-labelledby="stageTwoToggle" hidden>
+          <div class="section-head"><span class="step-number">02</span><div class="head-copy"><h2 id="step2Heading">Add Data 2</h2><p>Insert the second data block into Prompt 1E.</p></div><span class="step-status" id="step2Status">Waiting for data</span></div>
+          <div class="field"><label for="data2">Data 2 <span class="required">*</span></label>
+            <div class="field-control tall"><textarea id="data2" rows="8" placeholder="Paste Data 2 here. It will replace the standalone DATA2 marker above the system instruction."></textarea><button class="paste-btn" type="button" data-paste="data2" title="Paste Data 2 from clipboard" aria-label="Paste Data 2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="13" height="16" rx="2"/><path d="M9 5V3h7v2M9 9h7M9 13h7"/></svg><span>Paste</span></button></div>
+            <div class="field-meta"><span>Prompt 1E + Data 2 = Prompt 2</span><span id="data2Count">0 characters</span></div>
+          </div>
+          <div class="step-footer"><span class="subtle-caption" id="step2Hint">Complete both steps to copy the final prompt.</span><button id="copy2" class="primary-btn" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2"/></svg>Copy Final Prompt</button></div>
+          <div class="stage-navigation"><button id="previousStage" type="button" class="stage-nav-btn"> <span aria-hidden="true">←</span> Back to Prompt 1E</button></div>
+        </section>
+        <div class="data-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg><span>All text and template versions are stored locally in this browser. Nothing is uploaded or sent to a server.</span></div>
+      </div>
+
+      <aside class="preview-card" aria-labelledby="previewHeading">
+        <div class="preview-top"><div><div class="preview-eyebrow">LIVE OUTPUT</div><h2 id="previewHeading">Prompt preview</h2></div><span id="savedStatus" class="save-status">Saved locally</span></div>
+        <div class="preview-tabs" role="tablist" aria-label="Choose output"><button class="preview-tab" id="tab1" role="tab" type="button" aria-controls="outputText" aria-selected="true" data-preview="one">Prompt 1E</button><button class="preview-tab" id="tab2" role="tab" type="button" aria-controls="outputText" aria-selected="false" data-preview="two">Final Prompt 2</button></div>
+        <div class="preview-alert" id="previewAlert" aria-live="polite"></div>
+        <textarea id="outputText" class="output-area" readonly spellcheck="false" aria-label="Generated prompt preview"></textarea>
+        <div class="preview-footer"><span id="outputMetrics">0 characters</span><div class="preview-actions"><button id="downloadPrompt" type="button" class="icon-action" aria-label="Download preview as text file" title="Download .txt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3"/></svg></button><button id="copyPreview" type="button" class="outline-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2"/></svg>Copy preview</button></div></div>
+        <div class="external-actions"><span>After copying, paste the prompt into your AI chat.</span><a id="openChatGPT" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M20 14v6H4V4h6"/></svg></a></div>
+      </aside>
+    </main>
+    <footer class="site-footer">PalacePrompt <span>·</span> Offline-ready <span>·</span> No login required</footer>
+  </div>
+
+  <div id="settingsOverlay" class="modal-overlay" hidden>
+    <section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-head"><div><div class="preview-eyebrow">TEMPLATE MANAGEMENT</div><h2 id="settingsTitle">Base prompt settings</h2><p>Edit the source template, save versions, or recover earlier versions.</p></div><button id="closeSettings" class="modal-close" type="button" aria-label="Close settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button></div>
+      <div class="modal-body">
+        <div class="template-section"><div class="row-head"><label for="templateEditor">Base template</label><span class="template-state" id="templateDirty">No unsaved edits</span></div>
+          <p class="field-help">Placeholders must remain exactly as shown. Only the standalone <code>DATA2</code> line is replaced during Stage 2.</p>
+          <div class="token-row"><code>DATA1-condition-name</code><code>DATA1-parody-world-name</code><code>DATA1-clinical-data</code><code>DATA2</code></div>
+          <textarea id="templateEditor" rows="14" spellcheck="false" aria-label="Editable base prompt template"></textarea>
+          <div id="templateValidation" class="validation-note" role="status"></div>
+          <div class="template-save-controls"><input id="versionName" aria-label="Name this version" placeholder="Version name (optional)" maxlength="80" /><button id="saveTemplate" class="primary-btn" type="button">Save new version</button></div>
+        </div>
+        <div class="history-section"><div class="row-head"><h3>Version history</h3><span id="versionCount" class="small-muted"></span></div><p class="field-help">Restoring a version changes the active template, but retains the history for future recovery.</p><div id="versionsList" class="versions-list"></div></div>
+        <div class="backup-section"><h3>Backup &amp; recovery</h3><p class="field-help">Export all fields, your active template, and version history as a JSON backup. Importing replaces the locally saved app data.</p><div class="backup-actions"><button id="exportBackup" class="outline-btn" type="button">Export backup (.json)</button><button id="importBackup" class="outline-btn" type="button">Import backup</button><input id="importFile" type="file" accept=".json,application/json" hidden /><button id="restoreDefault" class="danger-outline-btn" type="button">Restore factory template</button></div></div>
+      </div>
+      <div class="modal-foot"><span>Changes apply only after saving or restoring a version.</span><button id="doneSettings" class="outline-btn" type="button">Done</button></div>
+    </section>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+<script id="factoryTemplate" type="text/plain">================================================================================
+TARGET CONDITION: DATA1-condition-name
+SOURCE DATA / EMPHASIS: [
+
+DATA1-clinical-data
+]
+WORLD: DATA1-parody-world-name [characters shall be faithful to the parody world]
+
+
+DATA2
+
+==============================
+
+# SYSTEM INSTRUCTION: SKETCHY STEP 2 CK MEMORY PALACE ARCHITECT (SYMBOL-BANK ENFORCED)
+
+--------------------------------------------------------------------------------
+1. MANDATORY INTERNAL COGNITIVE WORKFLOW & SYMBOL-BANK RETRIEVAL
+--------------------------------------------------------------------------------
+You MUST execute the following 4 phases sequentially. Do not skip any phase.
+
+PHASE 1: CLINICAL COMPREHENSION & CATEGORIZATION
+Map the TARGET CONDITION across 5 strict functional categories:
+1. Etiology / Risk Factors / Genetics (Genetics ONLY if High-Yield)
+2. Clinical Presentation (1-3 Character Drama: Symptoms, Physical Exam, Complications)
+3. Central Pathophysiology Mechanism
+4. Diagnostic Workup (#1 Best Initial, and #2 Confirmatory ONLY if HY/relevant)
+5. Management Steps (#1 First-Line, #2 Definitive/Source Control ONLY if HY/relevant, Contraindicated Pitfall)
+
+PHASE 2: MANDATORY SYMBOL BANK LOOKUP (SOURCE OF TRUTH)
+For EVERY clinical concept identified in Phase 1, query the project source files (inside the local project files named as 'SYMBOL_BANK.txt')
+
+STRICT SYMBOL RULES:
+- RULE A: You MUST use the EXACT visual metaphor from the Symbol Bank file (e.g., T-bone steak = Troponin; Furious kid = Furosemide; Moon face = Corticosteroids; Bivalirudin = No intruding).
+- RULE B: NEVER invent generic or improvised symbols if an entry exists in the source files.
+- RULE C (FALLBACK): If a specific concept is completely absent from the source files, create a new Sketchy-style visual metaphor and explicitly flag it in the prompt text as `[CUSTOM SYMBOL: description]`.
+
+PHASE 3: SELF-CONTAINED ACTIVE NARRATIVE CONSTRUCTION
+- Weave ALL retrieved symbols into a cohesive, logical, high-stakes story set in the PARODY / ENVIRONMENT THEME.
+- RULE: The narrative story MUST stand on its own feet. It must be 100% understandable and memorable purely through dynamic character interactions, weapons, spells, injuries, or environmental reactions—NEVER passive props placed on tables or shelves.
+- RULE: Labels are purely additive; the story MUST NOT depend on labels to make sense.
+
+PHASE 4: COMPREHENSIVE SCENE LABELING OVERLAY
+- Apply stenciled, carved, painted, or embroidered scene-native text labels to EVERY visual symbol across ALL zones (Etiology, Risk Factors, Genetics, Presentation Clues, Pathophysiology, Diagnostics, and Management).
+
+--------------------------------------------------------------------------------
+2. COMPOSITION & STRICT ZONAL SEPARATION (LEFT TO RIGHT)
+--------------------------------------------------------------------------------
+Enforce strict spatial segregation across a 16:9 cinematic panoramic view:
+
+- FAR LEFT (ZONE 1: ETIOLOGY, RISK FACTORS & GENETICS):
+  * Strictly separated from the patient presentation drama.
+  * Displays demographic archetypes, environmental risk factors, and underlying causes acting in the far background.
+  * *Conditional Rule:* Include Genetics visual elements ONLY if explicitly high-yield for this condition.
+
+- LEFT-CENTER (ZONE 2: PURE CLINICAL PRESENTATION - 1 TO 3 CHARACTERS):
+  * Dedicated EXCLUSIVELY to clinical presentation, physical exam findings, and acute symptoms.
+  * Embodied by 1 to 3 central characters actively interacting, reacting in agony, demonstrating exam signs, or showing acute complications in real time.
+
+- CENTER (ZONE 3: PATHOPHYSIOLOGY & SYSTEM FAILURE):
+  * The underlying organ/cellular breakdown acting as the narrative bridge between symptoms and treatment.
+
+- RIGHT (ZONE 4: DYNAMIC DIAGNOSTIC & MANAGEMENT ALGORITHM):
+  * Hero characters actively executing [#1 DIAGNOSIS], [#2 DIAGNOSIS (if relevant)], [#1 TX], [#2 TX (if relevant)], and avoiding [PITFALL] in real-time story actions.
+
+================================================================================
+OUTPUT GENERATION TASK
+================================================================================
+First, output your internal SYMBOL EXTRACTION TABLE mapping clinical concepts to exact Symbol Bank metaphors.
+Then, generate the populated Image Prompt below:
+
+---
+
+### SYMBOL EXTRACTION & SOURCE VERIFICATION TABLE:
+* [Concept 1 Name] -> Symbol Bank Metaphor: [Exact Metaphor / or CUSTOM SYMBOL flag]
+* [Concept 2 Name] -> Symbol Bank Metaphor: [Exact Metaphor / or CUSTOM SYMBOL flag]
+*(List all extracted concepts across Etiology, Presentation, Patho, Dx, and Tx)*
+
+---
+
+Scene Title: "[Memorable Narrative Title - e.g., The Shattered Vault of the Aortic Rift]"
+
+Create a single, unified, borderless 16:9 cinematic scene in a polished modern simplified anime and colored manga style with rich line art, vivid narrative lighting, and dynamic action. Set the scene in a fantastical [SELECTED PARODY / ENVIRONMENT THEME] environment. No comic panels, split screens, text boxes, speech bubbles, digital UI elements, or floating UI cards. Deep depth of field wide panned-out shot showing active, interacting characters across the entire scene.
+
+FAR LEFT - ETIOLOGY, RISK FACTORS & GENETICS (ZONE 1):
+In the background far-left environment, risk factors and root causes are physically isolated from the main patient presentation:
+- CAUSES & RISK FACTORS: Background structures or background figures actively demonstrate root causes using exact visual metaphors from SYMBOL_BANK: [ETIOLOGY/RISK SYMBOL 1 from SYMBOL_BANK] featuring a carved marker labeled "CAUSE: [ETIOLOGY 1]", and [ETIOLOGY/RISK SYMBOL 2 from SYMBOL_BANK] featuring a stenciled banner labeled "RISK: [RISK FACTOR 2]".
+- GENETICS (IF HIGH-YIELD/RELEVANT): [If high-yield, include GENETICS SYMBOL from SYMBOL_BANK actively interacting in the background with a painted label reading "GENETICS: [GENE/MUTATION NAME]". If not HY, omit completely].
+
+LEFT-CENTER - PURE CLINICAL PRESENTATION DRAMA (ZONE 2 - 1 TO 3 CHARACTERS):
+Completely distinct from Zone 1, a dramatic 1-to-3 character interaction physically acts out the complete clinical picture:
+- PRIMARY SUFFERER ([DEMOGRAPHIC ARCHETYPE]): Actively acting out presentation symptoms using exact symbols from SYMBOL_BANK: [CLINICAL PRESENTATION SYMBOL 1 from SYMBOL_BANK] marked with a physical badge reading "CLINICAL SIGN: [PRESENTATION CLUE 1]" and [CLINICAL PRESENTATION SYMBOL 2 from SYMBOL_BANK] marked with an embedded label reading "SYMPTOM: [PRESENTATION CLUE 2]". The character is physically reacting [ACTION: e.g., clutching a radiating line down their spine, sweating profusely, doubled over in agony].
+- SECONDARY INTERACTING CHARACTER(S): A companion, medic, or adversary actively interacts with the primary sufferer to demonstrate physical exam clues: [CHARACTER 2 ACTION: e.g., checking unequal wrist gauntlets to symbolize asymmetrical pulses / reacting to a booming horn soundwave representing a murmur using CLINICAL PRESENTATION SYMBOL 3 from SYMBOL_BANK], marked with a nearby cloth wrap labeled "EXAM FINDING: [PHYSICAL EXAM CLUE 3]".
+- The presentation story must be fully intelligible purely through these character actions and reactions.
+
+CENTER - PATHOPHYSIOLOGY & SYSTEM BREAKDOWN (ZONE 3):
+At the focal center, bridging the presentation to the solution, core pathophysiology unfolds:
+- Core disease mechanisms engage in active conflict: [CORE MECHANISM SYMBOL 1 from SYMBOL_BANK] is actively [ACTION: e.g., tearing/blocking/corroding] [TARGET ORGAN STRUCTURE], creating [PATHOPHYSIOLOGY MECHANISM]. An engraved archway overhead clearly reads: "[TARGET CONDITION NAME]".
+
+RIGHT SIDE - DYNAMIC DIAGNOSTICS & MANAGEMENT ALGORITHM (ZONE 4):
+On the right, hero characters actively resolve the crisis using the clinical algorithm:
+
+1. ACTIVE DIAGNOSTICS:
+   - [#1 DIAGNOSIS]: A hero character actively uses [BEST INITIAL TEST SYMBOL from SYMBOL_BANK] to inspect the damage, featuring a glowing brass emblem reading "[#1 DIAGNOSIS] BEST INITIAL: [TEST NAME]".
+   - [#2 DIAGNOSIS] (IF RELEVANT/HY): [If high-yield/relevant, a secondary hero performs CONFIRMATORY TEST SYMBOL from SYMBOL_BANK marked with a stone plaque reading "[#2 DIAGNOSIS] CONFIRMATORY: [TEST NAME]". If not relevant, omit].
+
+2. ACTIVE MANAGEMENT & ESCALATION:
+   - [#1 TX]: A defender character actively uses [FIRST-LINE DRUG/ACTION SYMBOL from SYMBOL_BANK] in mid-action to halt pathophysiology, featuring a painted cloth banner reading "[#1 TX] FIRST-LINE: [TREATMENT NAME]".
+   - [#2 TX] (IF RELEVANT/HY): [If high-yield/relevant, an escalating secondary force prepares DEFINITIVE/SOURCE CONTROL SYMBOL from SYMBOL_BANK marked with an iron stencil reading "[#2 TX] DEFINITIVE: [TREATMENT NAME]". If not relevant, omit].
+   - [PITFALL]: A character is restrained from using [CONTRAINDICATED ITEM SYMBOL from SYMBOL_BANK] near a bright red slashed hazard marker labeled "CONTRAINDICATED: [AVOID ITEM]".
+
+DIRECTOR INSTRUCTION FOR ALL LABELS & SYMBOLS:
+The story must be visually cohesive and complete purely through character actions and SYMBOL_BANK metaphors. EVERY symbol across ALL zones (Etiology, Risk Factors, Presentation, Pathophysiology, Dx, and Tx) must feature a clear, surface-embedded label. Flag any missing symbol generated on the fly as `[CUSTOM SYMBOL: description]`.</script>
+<script>
+(() => {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const DEFAULT_TEMPLATE = $('factoryTemplate').textContent.trim();
+  const STORAGE_KEY = 'palaceprompt.state.v1';
+  const TOKENS = [
+    'DATA1-condition-name',
+    'DATA1-parody-world-name',
+    'DATA1-clinical-data',
+  ];
+  const TOKEN_REGEX = /DATA1-condition-name|DATA1-parody-world-name|DATA1-clinical-data/g;
+  const DATA2_LINE_REGEX = /^[ \t]*DATA2[ \t]*$/gm;
+  const TEXT_LIMIT = 1_500_000;
+  const BACKUP_LIMIT = 20_000_000;
+
+  const factoryVersion = () => ({
+    id: 'factory',
+    name: 'Factory default',
+    content: DEFAULT_TEMPLATE,
+    createdAt: null,
+  });
+  const freshState = () => ({
+    condition: '', world: '', clinical: '', data2: '',
+    activeTemplate: DEFAULT_TEMPLATE,
+    versions: [factoryVersion()],
+    preview: 'one',
+    stage: 'one',
+  });
+
+  const elt = {
+    condition: $('condition'), world: $('world'), clinical: $('clinical'), data2: $('data2'),
+    copy1: $('copy1'), copy2: $('copy2'), copyPreview: $('copyPreview'),
+    tab1: $('tab1'), tab2: $('tab2'), output: $('outputText'),
+    alert: $('previewAlert'), metrics: $('outputMetrics'),
+    savedStatus: $('savedStatus'),
+    stageOne: $('stageOnePanel'), stageTwo: $('stageTwoPanel'),
+    stageOneToggle: $('stageOneToggle'), stageTwoToggle: $('stageTwoToggle'),
+    settingsOverlay: $('settingsOverlay'), editor: $('templateEditor'),
+    versionName: $('versionName'), versionList: $('versionsList'),
+    templateValidation: $('templateValidation'), dirty: $('templateDirty'),
+  };
+
+  let state = readState();
+  let storageTimer;
+  let toastTimer;
+  let lastModalFocus = null;
+  let notifiedStorageFailure = false;
+
+  function isValidTemplate(content) {
+    if (typeof content !== 'string' || !content.trim() || content.length > TEXT_LIMIT) return false;
+    return TOKENS.every((token) => content.includes(token)) &&
+      [...content.matchAll(DATA2_LINE_REGEX)].length === 1;
+  }
+
+  function missingTemplateTokens(content) {
+    const missing = TOKENS.filter((token) => !content.includes(token));
+    const count = [...content.matchAll(DATA2_LINE_REGEX)].length;
+    if (count !== 1) missing.push(`standalone DATA2 line (found ${count})`);
+    return missing;
+  }
+
+  function readState() {
+    let raw;
+    try { raw = localStorage.getItem(STORAGE_KEY); } catch (_) { return freshState(); }
+    if (!raw) return freshState();
+    try {
+      const value = JSON.parse(raw);
+      const output = freshState();
+      if (!value || typeof value !== 'object') return output;
+      for (const key of ['condition', 'world', 'clinical', 'data2']) {
+        if (typeof value[key] === 'string' && value[key].length < TEXT_LIMIT) output[key] = value[key];
+      }
+      if (isValidTemplate(value.activeTemplate)) output.activeTemplate = value.activeTemplate;
+      if (Array.isArray(value.versions)) {
+        const historical = value.versions.filter((v) => v && typeof v.id === 'string' &&
+          typeof v.name === 'string' && typeof v.content === 'string' && isValidTemplate(v.content));
+        output.versions = historical.filter((v) => v.id !== 'factory');
+        output.versions.unshift(factoryVersion());
+      }
+      output.preview = value.preview === 'two' ? 'two' : 'one';
+      output.stage = value.stage === 'two' ? 'two' : 'one';
+      return output;
+    } catch (_) { return freshState(); }
+  }
+
+  function scheduleSave() {
+    elt.savedStatus.textContent = 'Saving…';
+    elt.savedStatus.classList.remove('storage-error');
+    clearTimeout(storageTimer);
+    storageTimer = setTimeout(saveImmediately, 180);
+  }
+
+  function saveImmediately() {
+    clearTimeout(storageTimer);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      elt.savedStatus.textContent = 'Saved locally';
+    } catch (_) {
+      elt.savedStatus.textContent = 'Session only';
+      if (!notifiedStorageFailure) {
+        notify('Local storage is unavailable/full. Export a backup in Settings to preserve your work.');
+        notifiedStorageFailure = true;
+      }
+    }
+  }
+
+  function buildPromptOne() {
+    const replacements = {
+      'DATA1-condition-name': state.condition,
+      'DATA1-parody-world-name': state.world,
+      'DATA1-clinical-data': state.clinical,
+    };
+    return state.activeTemplate.replace(TOKEN_REGEX, (key) => replacements[key]);
+  }
+
+  function buildPromptTwo() {
+    return buildPromptOne().replace(/^[ \t]*DATA2[ \t]*$/m, () => state.data2);
+  }
+
+  function readyOne() {
+    return isValidTemplate(state.activeTemplate) &&
+      [state.condition, state.world, state.clinical].every((s) => s.trim().length > 0);
+  }
+  function readyTwo() { return readyOne() && state.data2.trim().length > 0; }
+
+  function selectStage(stage, focusTab = false) {
+    state.stage = stage === 'two' ? 'two' : 'one';
+    // Keep the output preview aligned with the selected step by default.
+    state.preview = state.stage;
+    render();
+    scheduleSave();
+    if (focusTab) (state.stage === 'one' ? elt.stageOneToggle : elt.stageTwoToggle).focus();
+  }
+
+  function render() {
+    const isOne = state.stage !== 'two';
+    elt.stageOne.hidden = !isOne;
+    elt.stageTwo.hidden = isOne;
+    elt.stageOneToggle.setAttribute('aria-selected', String(isOne));
+    elt.stageTwoToggle.setAttribute('aria-selected', String(!isOne));
+    elt.stageOneToggle.tabIndex = isOne ? 0 : -1;
+    elt.stageTwoToggle.tabIndex = isOne ? -1 : 0;
+    document.querySelector('.stage-switch').classList.toggle('stage-two', !isOne);
+    const filled = [state.condition, state.world, state.clinical].filter((s) => s.trim()).length;
+    $('step1Status').textContent = `${filled} of 3 filled`;
+    $('step1Status').classList.toggle('ready', readyOne());
+    $('step2Status').textContent = state.data2.trim() ? 'Data added' : 'Waiting for data';
+    $('step2Status').classList.toggle('ready', readyTwo());
+    $('clinicalCount').textContent = `${state.clinical.length.toLocaleString()} characters`;
+    $('data2Count').textContent = `${state.data2.length.toLocaleString()} characters`;
+    $('step1Hint').textContent = readyOne() ? 'Prompt 1E is ready.' : 'Complete all three fields to copy Prompt 1E.';
+    $('step2Hint').textContent = readyTwo() ? 'Final Prompt 2 is ready.' : 'Complete both steps to copy the final prompt.';
+    elt.copy1.disabled = !readyOne();
+    elt.copy2.disabled = !readyTwo();
+    const selected = state.preview;
+    elt.tab1.setAttribute('aria-selected', String(selected === 'one'));
+    elt.tab2.setAttribute('aria-selected', String(selected === 'two'));
+    const previewText = selected === 'one' ? buildPromptOne() : buildPromptTwo();
+    // Textarea.value, never innerHTML, so inserted user content is treated as plain text.
+    elt.output.value = previewText;
+    elt.metrics.textContent = `${previewText.length.toLocaleString()} characters · ${countWords(previewText).toLocaleString()} words`;
+    const complete = selected === 'one' ? readyOne() : readyTwo();
+    const invalid = missingTemplateTokens(state.activeTemplate);
+    if (invalid.length) {
+      elt.alert.textContent = 'The current template is missing placeholders. Fix it in Settings.';
+      elt.alert.className = 'preview-alert warn';
+    } else if (complete) {
+      elt.alert.textContent = selected === 'one' ? '✓ All Stage 1 fields inserted. DATA2 remains for the next step.' : '✓ All four inputs inserted. Final prompt ready.';
+      elt.alert.className = 'preview-alert ok';
+    } else {
+      elt.alert.textContent = selected === 'one'
+        ? 'Preview updates as you type. Empty inputs remain blank.'
+        : 'Final preview updates as you add Data 2.';
+      elt.alert.className = 'preview-alert';
+    }
+    elt.copyPreview.disabled = !complete;
+    $('downloadPrompt').disabled = !complete;
+  }
+
+  function countWords(text) {
+    const trimmed = text.trim();
+    return trimmed ? trimmed.split(/\s+/u).length : 0;
+  }
+
+  async function copyText(text, successMessage) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        legacyCopy(text);
+      }
+      notify(successMessage);
+    } catch (_) {
+      try { legacyCopy(text); notify(successMessage); }
+      catch (__) { notify('Clipboard access blocked. Select the preview and copy manually with Ctrl/Cmd+C.'); }
+    }
+  }
+
+  function legacyCopy(text) {
+    const temp = document.createElement('textarea');
+    temp.value = text;
+    temp.setAttribute('readonly', '');
+    temp.style.cssText = 'position:fixed;top:0;left:-10000px;opacity:0;';
+    document.body.appendChild(temp);
+    temp.select();
+    const copied = document.execCommand('copy');
+    temp.remove();
+    if (!copied) throw new Error('Legacy copy failed');
+  }
+
+  async function pasteInto(field) {
+    const target = elt[field];
+    if (!target) return;
+    try {
+      if (!navigator.clipboard?.readText || !window.isSecureContext) throw new Error('Clipboard reading unavailable');
+      const text = await navigator.clipboard.readText();
+      if (!text) { notify('Clipboard is empty.'); return; }
+      // Replace selection if any; otherwise replace existing input deliberately.
+      const selection = target.selectionStart !== target.selectionEnd;
+      if (selection) target.setRangeText(text, target.selectionStart, target.selectionEnd, 'end');
+      else target.value = text;
+      state[field] = target.value;
+      render();
+      scheduleSave();
+      notify(`Pasted into ${field === 'data2' ? 'Data 2' : field === 'world' ? 'parody world' : field === 'clinical' ? 'clinical data' : 'condition name'}.`);
+    } catch (_) {
+      target.focus();
+      notify('Clipboard permission denied or unavailable. Press ⌘V (Mac) or Ctrl+V here.');
+    }
+  }
+
+  function notify(message) {
+    const toast = $('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  function downloadText(filename, text, mime = 'text/plain;charset=utf-8') {
+    const objectURL = URL.createObjectURL(new Blob([text], { type: mime }));
+    const a = document.createElement('a');
+    a.href = objectURL;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(objectURL), 1000);
+  }
+
+  function slug(text) {
+    return String(text || 'untitled').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'untitled';
+  }
+
+  function generateId() {
+    return (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+      ? crypto.randomUUID() : `v-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  function addHistory(name, content) {
+    state.versions.push({ id: generateId(), name: name.slice(0, 80), content, createdAt: new Date().toISOString() });
+  }
+
+  function renderSettingsValidation() {
+    const content = elt.editor.value;
+    const missing = missingTemplateTokens(content);
+    const invalid = missing.length > 0 || !content.trim() || content.length > TEXT_LIMIT;
+    elt.templateValidation.className = invalid ? 'validation-note invalid' : 'validation-note';
+    elt.templateValidation.textContent = invalid
+      ? `⚠ ${missing.length ? `Missing/invalid: ${missing.join(', ')}` : 'Template is empty or too large.'}`
+      : '✓ All 4 required placeholders are present.';
+    const dirty = elt.editor.value !== state.activeTemplate;
+    elt.dirty.textContent = dirty ? 'Unsaved changes' : 'No unsaved edits';
+    elt.dirty.classList.toggle('dirty', dirty);
+    $('saveTemplate').disabled = invalid;
+  }
+
+  function renderVersions() {
+    const container = elt.versionList;
+    container.replaceChildren();
+    $('versionCount').textContent = `${state.versions.length} saved`;
+    for (const version of state.versions.slice().reverse()) {
+      const row = document.createElement('div');
+      row.className = 'version-entry';
+      const info = document.createElement('div');
+      const name = document.createElement('div');
+      name.className = 'version-entry-title';
+      name.textContent = version.name;
+      const meta = document.createElement('div');
+      meta.className = 'version-entry-meta';
+      const isActive = version.content === state.activeTemplate;
+      meta.textContent = `${version.createdAt ? new Date(version.createdAt).toLocaleString() : 'Original built-in template'}${isActive ? ' · Active content' : ''}`;
+      info.append(name, meta);
+      const restore = document.createElement('button');
+      restore.type = 'button';
+      restore.textContent = isActive ? 'Active' : 'Restore';
+      restore.disabled = isActive;
+      restore.addEventListener('click', () => restoreVersion(version));
+      row.append(info, restore);
+      container.appendChild(row);
+    }
+  }
+
+  function openSettings() {
+    lastModalFocus = document.activeElement;
+    elt.editor.value = state.activeTemplate;
+    elt.versionName.value = '';
+    renderSettingsValidation();
+    renderVersions();
+    elt.settingsOverlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('closeSettings').focus();
+  }
+
+  function closeSettings() {
+    if (elt.settingsOverlay.hidden) return;
+    if (elt.editor.value !== state.activeTemplate &&
+        !window.confirm('Discard your unsaved template edits?')) return;
+    elt.settingsOverlay.hidden = true;
+    document.body.style.overflow = '';
+    if (lastModalFocus && typeof lastModalFocus.focus === 'function') lastModalFocus.focus();
+  }
+
+  function restoreVersion(version) {
+    if (elt.editor.value !== state.activeTemplate &&
+        !window.confirm('Discard unsaved template edits and restore this version?')) return;
+    if (!window.confirm(`Restore "${version.name}" as the active template? Your previous versions will be kept.`)) return;
+    state.activeTemplate = version.content;
+    addHistory(`Restored: ${version.name}`, version.content);
+    elt.editor.value = version.content;
+    render();
+    renderSettingsValidation();
+    renderVersions();
+    saveImmediately();
+    notify('Earlier template restored. Your version history is retained.');
+  }
+
+  function saveNewTemplate() {
+    const content = elt.editor.value;
+    if (!isValidTemplate(content)) {
+      renderSettingsValidation();
+      notify('Fix missing template placeholders before saving.');
+      return;
+    }
+    const customName = elt.versionName.value.trim();
+    const label = customName || `Version ${state.versions.length}`;
+    state.activeTemplate = content;
+    addHistory(label, content);
+    elt.versionName.value = '';
+    render();
+    renderSettingsValidation();
+    renderVersions();
+    saveImmediately();
+    notify(`Saved "${label}" as a new template version.`);
+  }
+
+  function restoreFactory() {
+    if (!window.confirm('Restore the built-in original template? This preserves all prior versions and your entered data.')) return;
+    state.activeTemplate = DEFAULT_TEMPLATE;
+    addHistory('Factory template restored', DEFAULT_TEMPLATE);
+    elt.editor.value = DEFAULT_TEMPLATE;
+    render();
+    renderSettingsValidation();
+    renderVersions();
+    saveImmediately();
+    notify('Factory template restored.');
+  }
+
+  function exportBackup() {
+    const payload = { schema: 'PalacePromptBackupV1', exportedAt: new Date().toISOString(), app: state };
+    const filename = `palaceprompt-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    downloadText(filename, JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
+    notify('Backup exported.');
+  }
+
+  async function importBackup(file) {
+    if (!file) return;
+    if (file.size > BACKUP_LIMIT) { notify('Backup file too large (20 MB maximum).'); return; }
+    try {
+      const parsed = JSON.parse(await file.text());
+      if (parsed?.schema !== 'PalacePromptBackupV1' || !parsed.app || !isValidTemplate(parsed.app.activeTemplate) || !Array.isArray(parsed.app.versions)) {
+        throw new Error('Invalid or incompatible PalacePrompt backup.');
+      }
+      for (const key of ['condition', 'world', 'clinical', 'data2']) {
+        if (typeof parsed.app[key] !== 'string' || parsed.app[key].length > TEXT_LIMIT) throw new Error(`Invalid field: ${key}`);
+      }
+      if (parsed.app.versions.length > 500 || parsed.app.versions.some((version) =>
+        !version || typeof version.id !== 'string' || typeof version.name !== 'string' || !isValidTemplate(version.content))) {
+        throw new Error('Invalid template history in backup.');
+      }
+      if (!window.confirm('Import this backup and replace the current local inputs, template, and version history? Export your existing backup first if needed.')) return;
+      const imported = freshState();
+      for (const key of ['condition', 'world', 'clinical', 'data2']) imported[key] = parsed.app[key];
+      imported.activeTemplate = parsed.app.activeTemplate;
+      imported.versions = parsed.app.versions.filter((v) => v.id !== 'factory').map((v) => ({
+        id: v.id, name: v.name.slice(0, 80), content: v.content,
+        createdAt: typeof v.createdAt === 'string' ? v.createdAt : null,
+      }));
+      imported.versions.unshift(factoryVersion());
+      imported.preview = parsed.app.preview === 'two' ? 'two' : 'one';
+      imported.stage = parsed.app.stage === 'two' ? 'two' : 'one';
+      state = imported;
+      for (const key of ['condition', 'world', 'clinical', 'data2']) elt[key].value = state[key];
+      elt.editor.value = state.activeTemplate;
+      renderSettingsValidation();
+      renderVersions();
+      render();
+      saveImmediately();
+      notify('Backup restored successfully.');
+    } catch (error) {
+      notify(`Could not import backup: ${error.message || 'invalid file'}`);
+    }
+  }
+
+  // Bind user inputs and controls.
+  for (const key of ['condition', 'world', 'clinical', 'data2']) {
+    elt[key].value = state[key];
+    elt[key].addEventListener('input', () => {
+      state[key] = elt[key].value;
+      render();
+      scheduleSave();
+    });
+  }
+  document.querySelectorAll('[data-paste]').forEach((btn) => btn.addEventListener('click', () => pasteInto(btn.dataset.paste)));
+  document.querySelectorAll('[data-stage]').forEach((btn) => {
+    btn.addEventListener('click', () => selectStage(btn.dataset.stage));
+    btn.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 'one' : event.key === 'End' ? 'two'
+        : (state.stage === 'one' ? 'two' : 'one');
+      selectStage(next, true);
+    });
+  });
+  $('nextStage').addEventListener('click', () => selectStage('two', true));
+  $('previousStage').addEventListener('click', () => selectStage('one', true));
+  elt.copy1.addEventListener('click', () => { if (readyOne()) copyText(buildPromptOne(), 'Prompt 1E copied.'); });
+  elt.copy2.addEventListener('click', () => { if (readyTwo()) copyText(buildPromptTwo(), 'Final Prompt 2 copied.'); });
+  elt.copyPreview.addEventListener('click', () => {
+    if (state.preview === 'one' && readyOne()) copyText(buildPromptOne(), 'Prompt 1E copied.');
+    if (state.preview === 'two' && readyTwo()) copyText(buildPromptTwo(), 'Final Prompt 2 copied.');
+  });
+  document.querySelectorAll('[data-preview]').forEach((btn) => btn.addEventListener('click', () => {
+    state.preview = btn.dataset.preview;
+    render();
+    scheduleSave();
+  }));
+  $('downloadPrompt').addEventListener('click', () => {
+    const finalMode = state.preview === 'two';
+    if ((finalMode && !readyTwo()) || (!finalMode && !readyOne())) return;
+    const filename = `${slug(state.condition)}-${finalMode ? 'prompt2-final' : 'prompt1e'}.txt`;
+    downloadText(filename, finalMode ? buildPromptTwo() : buildPromptOne());
+    notify('Prompt downloaded as .txt.');
+  });
+  $('openSettings').addEventListener('click', openSettings);
+  $('closeSettings').addEventListener('click', closeSettings);
+  $('doneSettings').addEventListener('click', closeSettings);
+  elt.settingsOverlay.addEventListener('click', (event) => { if (event.target === elt.settingsOverlay) closeSettings(); });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !elt.settingsOverlay.hidden) closeSettings();
+    if (event.key === 'Tab' && !elt.settingsOverlay.hidden) {
+      const controls = [...elt.settingsOverlay.querySelectorAll('button:not([disabled]),input:not([disabled]):not([hidden]),textarea:not([disabled])')]
+        .filter((e) => e.getClientRects().length);
+      if (!controls.length) return;
+      const first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
+  elt.editor.addEventListener('input', renderSettingsValidation);
+  $('saveTemplate').addEventListener('click', saveNewTemplate);
+  $('restoreDefault').addEventListener('click', restoreFactory);
+  $('exportBackup').addEventListener('click', exportBackup);
+  $('importBackup').addEventListener('click', () => $('importFile').click());
+  $('importFile').addEventListener('change', (event) => {
+    importBackup(event.target.files[0]);
+    event.target.value = '';
+  });
+  render();
+})();
+
+</script>
+</body>
+</html>
